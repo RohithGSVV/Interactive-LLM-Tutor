@@ -1,0 +1,84 @@
+/* src/components/Sidebar.css */
+
+.sidebar {
+    width: 250px;
+    background-color: #e3f2fd;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.sidebar h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.mode-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.mode-selector label {
+    font-weight: bold;
+}
+
+.mode-selector select {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.mode-summary {
+    background-color: #f0f4fa;
+    color: #333;
+    padding: 10px;
+    margin-top: 15px;
+    border: 1px solid #d1d9e6;
+    border-radius: 5px;
+    font-size: 14px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.mode-summary.hidden {
+    opacity: 0;
+}
+
+.sidebar-toggle {
+    margin: 10px;
+    font-size: 14px;
+    background-color: #4a90e2;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar-toggle:hover {
+    background-color: #357ab8;
+}
+
+.main-content {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: margin-left 0.3s ease;
+}
+
+.main-content.with-sidebar {
+    /* margin-left: 270px; Align with sidebar width */
+    margin-left: 20px; 
+}
+
+.main-content.full-width {
+    /* margin-left: 50px; When the sidebar is closed */
+    margin-left: 20px; 
+}

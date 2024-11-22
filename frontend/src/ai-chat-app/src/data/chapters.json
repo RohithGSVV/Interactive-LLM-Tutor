@@ -1,0 +1,29 @@
+{
+    "chapters": [
+      {
+        "title": "Chapter 1: Accounting Principles",
+        "questions": [
+          "What are the main principles of accounting?",
+          "Explain double-entry bookkeeping.",
+          "What is the accrual basis of accounting?"
+        ]
+      },
+      {
+        "title": "Chapter 2: Financial Statements",
+        "questions": [
+          "What is a balance sheet?",
+          "Explain the income statement.",
+          "What is cash flow analysis?"
+        ]
+      },
+      {
+        "title": "Chapter 3: Advanced Topics",
+        "questions": [
+          "Explain depreciation methods.",
+          "What is inventory valuation?",
+          "How does goodwill impact financial statements?"
+        ]
+      }
+    ]
+  }
+  

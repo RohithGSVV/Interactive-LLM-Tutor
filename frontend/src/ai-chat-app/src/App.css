@@ -1,0 +1,135 @@
+.App {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: linear-gradient(to bottom right, #f0f4fa, #e3f2fd);
+}
+
+.app-body {
+    display: flex;
+    flex: 1;
+    margin-top: 5px;
+    position: relative;
+}
+
+.sidebar-toggle-container {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    z-index: 1000;
+    transition: left 0.3s ease-in-out;
+}
+
+.sidebar-toggle-container.closed {
+    left: 10px;
+}
+
+.sidebar-toggle-container.open {
+    left: 260px;
+}
+
+.sidebar-toggle {
+    font-size: 20px;
+    padding: 10px;
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: left 0.3s ease;
+}
+
+.sidebar-toggle:hover {
+    background-color: #357ab8;
+}
+
+.message-divider {
+    background-color: #d1d9e6;
+}
+
+/* Floating Action Button for Help */
+.floating-help-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    padding: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.floating-help-button:hover {
+    background-color: #357ab8;
+    transform: scale(1.05);
+}
+
+.floating-help-button:active {
+    transform: scale(0.95);
+}
+
+button.sidebar-toggle,
+button.dark-mode-toggle {
+    font-size: 20px;
+    padding: 10px;
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+button.sidebar-toggle:hover,
+button.dark-mode-toggle:hover {
+    background-color: #357ab8;
+    transform: scale(1.02);
+}
+
+button.sidebar-toggle:active,
+button.dark-mode-toggle:active {
+    transform: scale(0.95);
+}
+
+/* Main Content Transition with Sidebar */
+.main-content {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    transition: margin-left 0.3s ease-in-out;
+}
+
+.main-content.with-sidebar {
+    /* margin-left: 250px; */
+    margin-left: 20px;
+}
+
+.main-content.full-width {
+    /* margin-left: 50px; */
+    margin-left: 20px;
+}
+
+/* Sidebar Transition */
+.sidebar {
+    width: 230px;
+    background-color: #e3f2fd;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+    transition: width 0.3s ease-in-out, opacity 0.3s ease-in-out; /* Smooth open/close */
+}
+
+.sidebar.collapsed {
+    width: 0;
+    opacity: 0;
+    overflow: hidden;
+}

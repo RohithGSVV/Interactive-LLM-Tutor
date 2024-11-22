@@ -1,0 +1,82 @@
+version: '3.9'
+
+services:
+  # nginx:
+  #   image: nginx:latest
+  #   ports:
+  #     - "${PROXY_PORT}:80"  # Expose Nginx on port 7777
+  #   # networks:
+  #   #   - privatenet
+  #   #   - public
+  #   volumes:
+  #     - ./nginx.conf:/etc/nginx/nginx.conf:ro  # Mount the custom Nginx configuration file
+  #     - ./www:/www:ro
+  #   depends_on:
+  #     - ollama1
+  #     - ollama2
+
+  ollama_1:
+    image: ollama/ollama:latest
+    ports:
+      - ${OLLAMA_PORT_1}:11434
+    # networks:
+    #   - privatenet
+    hostname: ${OLLAMA_HOST_NAME_1}
+    container_name: ${OLLAMA_HOST_NAME_1}
+    volumes:
+      - ${WORK_DIR}/ollama:/root/.ollama
+      - .:/apt
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+              driver: nvidia
+              device_ids: ['0', '1', '2', '3']
+    security_opt:
+      - label:disable
+
+  ollama_2:
+    image: ollama/ollama:latest
+    ports:
+      - ${OLLAMA_PORT_2}:11434
+    hostname: ${OLLAMA_HOST_NAME_2}
+    container_name: ${OLLAMA_HOST_NAME_2}
+    volumes:
+      - ${WORK_DIR}/ollama:/root/.ollama
+      - .:/apt
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+              driver: nvidia
+              device_ids: ['0', '1', '2', '3']
+    security_opt:
+      - label:disable
+
+  # bastion:
+  #   image: alpine
+  #   ports:
+  #     - ${BASTION_PORT}:22
+  #   volumes:
+  #     - ./ssh_config:/etc/ssh/sshd_config:ro
+  #     - ./ssh_keys:/root/.ssh:ro
+  #   command: >
+  #     sh -c "
+  #       apk add --no-cache openssh &&
+  #       ssh-keygen -A &&
+  #       mkdir -p /run/sshd &&
+  #       /usr/sbin/sshd -D -e
+  #     "
+  #   depends_on:
+  #     - ollama1
+  #     - ollama2
+
+
+# networks:
+#   public:
+#   privatenet:
+#     internal: true
+#     driver: bridge  # Create a private network for internal communication
+  

@@ -1,0 +1,31 @@
+/* src/components/ModeSelector.css */
+.mode-selector {
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mode-selector label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.mode-selector select {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.mode-icons {
+    margin-left: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.mode-icon {
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+}

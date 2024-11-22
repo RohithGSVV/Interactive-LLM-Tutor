@@ -1,0 +1,30 @@
+/* src/components/Header.css */
+.header {
+    background: linear-gradient(135deg, #0033a0, #0070c0);
+    color: white;
+    padding: 20px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.header-logo {
+    height: 90px;
+    width: auto;
+}
+
+.header-text h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.subtitle {
+    font-size: 16px;
+    font-weight: normal;
+    margin-top: 5px;
+}

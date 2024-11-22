@@ -1,0 +1,9 @@
+langchain
+langchain-community
+langchain-ollama
+fastapi
+uvicorn
+requests
+python-dotenv
+pypdf
+chromadb-client

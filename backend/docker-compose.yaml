@@ -1,0 +1,80 @@
+#   ____             _                  _ 
+#  | __ )  __ _  ___| | _____ _ __   __| |
+#  |  _ \ / _` |/ __| |/ / _ \ '_ \ / _` |
+#  | |_) | (_| | (__|   <  __/ | | | (_| |
+#  |____/ \__,_|\___|_|\_\___|_| |_|\__,_|
+#
+# these services run on the compute node                                        
+version: '3.9'
+
+services:
+  # nginx:
+  #   image: nginx:latest
+  #   ports:
+  #     - "7777:7777"  # Expose Nginx on port 7777
+  #   # networks:
+  #   #   - hostnet
+  #   #   - privatenet
+  #   volumes:
+  #     - ./nginx.conf:/etc/nginx/nginx.conf:ro  # Mount a custom Nginx configuration file
+  #     - ./../frontend/react-app/build:/usr/share/nginx/html:ro  # Serve React build files
+
+
+  # postgres:
+  #   image: postgres:latest
+  #   environment:
+  #     POSTGRES_USER: youruser
+  #     POSTGRES_PASSWORD: yourpassword
+  #     POSTGRES_DB: yourdb
+  #   networks:
+  #     - privatenet
+  #   volumes:
+  #     - ${HOME}/${POSTGRES_STORAGE}:/var/lib/postgresql/data
+
+  chromadb:
+    image: chromadb/chroma:latest
+  #   networks:
+  #     - privatenet
+    environment:
+      CHROMA_SERVER_AUTH_CREDENTIALS_PROVIDER: "chromadb.auth.token.TokenConfigServerAuthCredentialsProvider"
+      CHROMA_SERVER_AUTH_PROVIDER: "chromadb.auth.token.TokenAuthServerProvider"
+      CHROMA_SERVER_AUTH_TOKEN_TRANSPORT_HEADER: "X_CHROMA_TOKEN"
+      CHROMA_SERVER_AUTH_CREDENTIALS: "${CHROMADB_TOKEN}"
+    ports:
+      - "${CHROMADB_PORT}:8000"
+    volumes:
+      - ${HOME}/${CHROMADB_STORAGE}:/chroma/chroma
+  
+  # ldap-auth-daemon:
+  #   build: ./authentication  # Path to the directory with Dockerfile for the auth daemon
+  #   # networks:
+  #   #   - privatenet
+  #   volumes:
+  #     - ${HOME}/.aws:/root/.aws   # AWS credentials to secretes manager
+
+  ai-application:
+    build: ./ai_application
+    environment:
+      OLLAMA_BASE_URL: "${OLLAMA_BASE_URL}"
+      DB_HOST: "${DB_HOST}"
+      CHROMADB_PORT: "${CHROMADB_PORT}"
+      POSTGRES_PORT: "$POSTGRES_PORT}"
+      CHROMADB_BASE_URL: "${CHROMADB_BASE_URL}"
+
+    ports:
+      - "${AI_APPLICATION_PORT}:8000"
+    volumes:
+      - ${HOME}/.aws:/root/.aws   # AWS credentials to secretes manager
+    # networks:
+    #   - hostnet
+    #   - privatenet
+
+# networks:
+#   hostnet:
+#     external: true  # Use the host network for Nginx to expose it to the host system
+
+#   privatenet:
+#     driver: bridge  # Create a private network for internal communication
+
+# volumes:
+#   pgdata:

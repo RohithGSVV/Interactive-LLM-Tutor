@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streaming API Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        #prompt {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 10px;
+        }
+        #response {
+            white-space: pre-wrap;
+            border: 1px solid #ccc;
+            padding: 10px;
+            min-height: 200px;
+        }
+        #submit {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        #submit:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Streaming API Test</h1>
+    <textarea id="prompt" placeholder="Enter your prompt here..."></textarea>
+    <button id="submit">Submit</button>
+    <h2>Response:</h2>
+    <div id="response"></div>
+
+    <script>
+        const apiUrl = 'http://localhost:8000/v1/chat/completions';
+        const promptInput = document.getElementById('prompt');
+        const submitButton = document.getElementById('submit');
+        const responseDiv = document.getElementById('response');
+
+        submitButton.addEventListener('click', async () => {
+            const prompt = promptInput.value;
+            responseDiv.textContent = '';
+            submitButton.disabled = true;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        model: 'llama3.1',
+                        messages: [{ role: 'user', content: prompt }],
+                        stream: true,
+                    }),
+                });
+
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+                    
+                    const chunk = decoder.decode(value);
+                    const lines = chunk.split('\n');
+                    
+                    for (const line of lines) {
+                        if (line.startsWith('data: ')) {
+                            const data = line.slice(6);
+                            if (data === '[DONE]') {
+                                console.log('Stream finished');
+                            } else {
+                                try {
+                                    const parsed = JSON.parse(data);
+                                    const content = parsed.choices[0].delta.content;
+                                    if (content) {
+                                        responseDiv.textContent += content;
+                                    }
+                                } catch (error) {
+                                    console.error('Error parsing JSON:', error);
+                                }
+                            }
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                responseDiv.textContent = 'An error occurred. Please check the console for details.';
+            } finally {
+                submitButton.disabled = false;
+            }
+        });
+    </script>
+    <div>
+        <pre>
+Created by AmazonQ
+------------------
+
+This HTML file includes:
+
+A simple user interface with a textarea for entering the prompt and a button to submit it.
+A div to display the streaming response.
+
+JavaScript code that:
+Sends a POST request to your API when the submit button is clicked.
+Reads the streaming response and updates the response div in real-time as new tokens arrive.
+Handles errors and enables/disables the submit button appropriately.
+
+To use this file:
+Save it as test_streaming.html in a location of your choice.
+Make sure your API server (the Python application we created earlier) is running on http://localhost:8000.
+Open the test_streaming.html file directly in a web browser.
+
+You should now be able to enter a prompt, click "Submit", and see the response streaming
+in real-time in the response div.
+
+Note: If you're running your API on a different host or port, make sure to update the apiUrl variable
+in the JavaScript code accordingly. Also, be aware that opening local HTML files in a browser can sometimes
+have security restrictions when making requests to localhost. If you encounter issues, you might need to
+use a local development server to serve this HTML file, or adjust your browser's security settings.
+This setup provides a simple way to test your streaming API directly from a web browser, allowing you
+to verify that the streaming functionality is working as expected.
+
+        </pre>
+    </div>
+</body>
+</html>

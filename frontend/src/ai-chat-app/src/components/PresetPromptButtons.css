@@ -1,0 +1,73 @@
+
+/* src/components/PresetPromptButtons.css */
+
+.preset-prompt-tree {
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+
+.chapters-heading {
+    font-size: 20px;
+    color: #0033a0;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.chapter {
+    background-color: #f2f2f2;
+    border-radius: 5px;
+    overflow: hidden;
+    transition: background-color 0.3s;
+}
+
+.chapter-button {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: left;
+    color: #0033a0;
+    background-color: #e0e0e0;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.chapter-button:hover {
+    background-color: #c8c8c8;
+    color: #001c66;
+}
+
+.questions {
+    padding-left: 15px;
+    padding-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background-color: #ffffff;
+    border-left: 2px solid #0033a0;
+    margin-left: 10px;
+}
+
+.prompt-button {
+    padding: 8px 12px;
+    background-color: #0033a0;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-align: left;
+}
+
+.prompt-button:hover {
+    background-color: #001c66;
+}
+
