@@ -1,50 +1,111 @@
-# Accounting Tutor
+# Locally Run React Development Environment
 
-### Links:
-- [Project Management (Jira)](https://gsu-team-qnddq56g.atlassian.net/jira/your-work)
-- [Document Repository (Teams)](https://teams.microsoft.com/l/channel/19%3A3BHfwfHpSPCe26OJGHfc9ZOT_YkbBDbO3q-HFNWby6M1%40thread.tacv2/General?groupId=3a37e321-a8b3-4447-b218-043acf44af08&tenantId=515ad73d-8d5e-4169-895c-9789dc742a70)
-- [Wiki (GitLab)](https://git.insight.gsu.edu:8000/genai_research/accounting-tutor/-/wikis/home)
+## Overview
 
+This is a locally runnable interactive LLM (Large Language Model) tutor application. The app is based on React and uses Docker (or Podman) to containerize the environment, making it easy to install, run, and develop. This guide will provide instructions on setting up the project, building the container, and running the React application in development mode.
 
-## GPU-Server
-The GPU-Server hosts Ollama instances (and vector database) with nginx as load balancer. Access is controlled through a private API key.
+## Prerequisites
 
-## Backend-Server
-The Backend-Server hosts the web application, databases and authentication server.
+Make sure that either Docker or Podman is installed on your system, as the script will look for one of these commands to execute the application container.
 
-## User Account
-User: 
-    `genai_tutor:x:3017:3017:Project> GenAI Tutor <pmolnar@gsu.edu>:/home1/genai_tutor:/bin/sh`
+- [Docker Installation Guide](https://docs.docker.com/get-docker/)
+- [Podman Installation Guide](https://podman.io/getting-started/installation)
 
-Group:
-    `genai_tutor:x:3017:`
+## Usage
 
+This repository contains a script that will allow you to manage the lifecycle of your React application container. The following options are available:
 
-```
-sudo groupadd -g 3017 genai_tutor
-sudo useradd -u 3017 -g 3017 -b /home1 -c "Project> GenAI Tutor <pmolnar@gsu.edu>" genai_tutor
-sudo mkdir /home1/genai_tutor
-sudo chown genai_tutor.genai_tutor /home1/genai_tutor/
-sudo chmod 750 /home1/genai_tutor/
-sudo mkdir -p /staging/users/genai_tutor
-```
+### Commands
 
-On GPU server run
-1. Add `genai_tutor` to `gpu_podman_users` group in `/etc/group`
-2. Run this script to create staging directory and update SUBUID and SUBGID ranges ```sudo /root/update_gpu_podman_users.pl```
+- **install**: Build the container image for the application.
+- **run**: Run the container interactively for development purposes.
+- **create**: Create a new React application based on the name provided by the script.
+- **build**: Build the static assets for the React application.
+- **start**: Start the React application in development mode.
 
-On Backend server create staging directory
-```
-sudo chown genai_tutor.genai_tutor /staging/users/genai_tutor/
-sudo chmod 750 /staging/users/genai_tutor/ 
+## Instructions
+
+First, clone the repository and navigate to the directory containing the script.
+
+### Running the Script
+
+```bash
+./<script-name>.sh [command]
 ```
 
-## CI/CD Pipeline
+Replace `<script-name>` with the name of the script provided in the repository.
 
-Manual CI/CD pipeline for `develop`, `uat`, and `main` branches only. There are two GitLab runners for this project: one on the GPU server, one on the Backend server. The GitLab runners are started as `genai_tutor`.
+### Example Commands
 
-Launch gitlab-runners on host `gpu-01` and `compute-05`. The GPU runner has the tag `gpu`, the other node has the tag `compute`
+#### 1. Build the Container Image
 
-### Runners
-- [gentai_tutor@gpu-01](https://git.insight.gsu.edu:8000/genai_research/accounting-tutor/-/runners/10)
-- [genai_tutor@compute-05](https://git.insight.gsu.edu:8000/genai_research/accounting-tutor/-/runners/11)
+```bash
+./<script-name>.sh install
+```
+This command builds the container image for the application.
+
+#### 2. Run the Application in Development Mode
+
+```bash
+./<script-name>.sh run
+```
+This command runs the container interactively and mounts the `src` folder for local development.
+
+#### 3. Create a New React Application
+
+```bash
+./<script-name>.sh create
+```
+This command will create a new React application. Make sure to run this command before attempting to build or start.
+
+#### 4. Build the React Application
+
+```bash
+./<script-name>.sh build
+```
+This command will build the React application, creating static assets suitable for production.
+
+#### 5. Start the Application in Development Mode
+
+```bash
+./<script-name>.sh start
+```
+This command will start the container and run the React application in development mode.
+
+### Default Variables and Environment Settings
+
+- The container name is generated using your username and the application name.
+- The script uses environment variables defined in a `.env` file located in the `src` directory of the application.
+- Port `3000` is used for local development, and this can be modified by changing the `LOCAL_PORT` variable within the script.
+
+### Help
+
+If no command is provided, the script will output usage instructions.
+
+```bash
+./<script-name>.sh
+```
+
+This will display all available commands.
+
+## Notes
+
+- The script uses either Docker or Podman to build and run containers.
+- Environment variables, such as API base URLs, are set in the `.env` file.
+- The `src` directory is mounted for local development, allowing for changes to be reflected in real time.
+
+## Troubleshooting
+
+- Make sure Docker or Podman is installed before running the script.
+- Ensure that all environment variables are correctly defined in the `.env` file.
+- If you encounter permission issues, try running the commands with `sudo`.
+
+## Copyright
+
+&copy; 2024 Georgia State University. This application was developed by Rohith Ganni and is proprietary to Georgia State University. Unauthorized distribution or copying of this code is prohibited.
+
+---
+
+**Developed By:** Georgia State University - Rohith Ganni
+**Contact:** rohithganni79@gmail.com
+
