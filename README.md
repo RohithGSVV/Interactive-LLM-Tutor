@@ -30,7 +30,7 @@ First, clone the repository and navigate to the directory containing the script.
 ### Running the Script
 
 ```bash
-./<script-name>.sh [command]
+./<script-name>.sh/.ps1 [command]
 ```
 
 Replace `<script-name>` with the name of the script provided in the repository.
@@ -40,35 +40,35 @@ Replace `<script-name>` with the name of the script provided in the repository.
 #### 1. Build the Container Image
 
 ```bash
-./<script-name>.sh install
+./<script-name>.sh/.ps1 install
 ```
 This command builds the container image for the application.
 
 #### 2. Run the Application in Development Mode
 
 ```bash
-./<script-name>.sh run
+./<script-name>.sh/.ps1 run
 ```
 This command runs the container interactively and mounts the `src` folder for local development.
 
 #### 3. Create a New React Application
 
 ```bash
-./<script-name>.sh create
+./<script-name>.sh/.ps1 create
 ```
 This command will create a new React application. Make sure to run this command before attempting to build or start.
 
 #### 4. Build the React Application
 
 ```bash
-./<script-name>.sh build
+./<script-name>.sh/.ps1 build
 ```
 This command will build the React application, creating static assets suitable for production.
 
 #### 5. Start the Application in Development Mode
 
 ```bash
-./<script-name>.sh start
+./<script-name>.sh/.ps1 start
 ```
 This command will start the container and run the React application in development mode.
 
@@ -83,7 +83,7 @@ This command will start the container and run the React application in developme
 If no command is provided, the script will output usage instructions.
 
 ```bash
-./<script-name>.sh
+./<script-name>.sh/.ps1
 ```
 
 This will display all available commands.
